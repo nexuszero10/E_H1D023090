@@ -41,15 +41,21 @@ def delete_book(book_list: list, index: int) -> list:
         print("Index tidak valid!")
     return book_list
 
+import numpy as np 
+
 def view_books_by_year(book_list) -> list:
     if len(book_list) == 0:
         print("Daftar buku kosong!")
     else:
-        sorted_books = sorted(book_list, key=lambda book: book['year'])
+        book_array = np.array(book_list)
+        sorted_indices = np.argsort([book['year'] for book in book_list])
+        sorted_books = book_array[sorted_indices]
         print("\nBuku-buku setelah diurutkan berdasarkan tahun terbit:")
-        for i in range(len(sorted_books)):
-            print(f"{i+1}. {sorted_books[i]['title']} ({sorted_books[i]['year']})")
+        for i, book in enumerate(sorted_books):
+            print(f"{i+1}. {book['title']} ({book['year']})")
+    
     return book_list
+
 
 def main():
     book_list = [] 
